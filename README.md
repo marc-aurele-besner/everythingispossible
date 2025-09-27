@@ -32,7 +32,6 @@ The app uses AI to continuously generate fresh, surprising affirmations that spa
 
 - **Frontend**: Next.js 15, React 19, TypeScript, TailwindCSS 4
 - **Backend**: Vercel serverless functions
-- **Database**: Neon (serverless Postgres)
 - **Notifications**: Web Push API + Service Workers
 - **AI**: OpenAI API for slogan generation
 - **Deployment**: Vercel with automated cron jobs
@@ -44,7 +43,6 @@ The app uses AI to continuously generate fresh, surprising affirmations that spa
 - Node.js 18+ 
 - npm/yarn/pnpm
 - OpenAI API key
-- Neon database connection string
 
 ### Installation
 
@@ -71,38 +69,34 @@ The app uses AI to continuously generate fresh, surprising affirmations that spa
    Add your configuration:
    ```env
    OPENAI_API_KEY=your_openai_api_key
-   DATABASE_URL=your_neon_database_url
    CRON_SECRET=your_secret_token
    NEXT_PUBLIC_VAPID_PUBLIC_KEY=your_vapid_public_key
    VAPID_PRIVATE_KEY=your_vapid_private_key
    ```
 
-4. **Set up the database**
-   ```bash
-   npm run db:migrate
-   ```
-
-5. **Start the development server**
+4. **Start the development server**
    ```bash
    npm run dev
    ```
 
-6. **Open your browser**
+5. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## 📁 Project Structure
 
 ```
-everything-is-possible/
 ├── app/                    # Next.js app directory
 │   ├── api/               # API routes
 │   │   ├── notifications/ # Push notification endpoints
 │   │   └── slogans/       # Slogan management
 │   ├── components/        # React components
-│   ├── lib/              # Utilities and database
-│   └── globals.css       # Global styles
+│   ├── lib/              # Utilities and helpers
+│   ├── globals.css       # Global styles
+│   ├── layout.tsx        # Root layout
+│   └── page.tsx          # Homepage
 ├── public/               # Static assets
 ├── workers/              # Service workers for PWA
+├── package.json
 └── README.md
 ```
 
@@ -112,36 +106,6 @@ everything-is-possible/
 - `GET /api/slogans/recent` - Fetch recent slogans for user
 - `POST /api/slogans/generate` - Manual slogan generation
 - `POST /api/notifications/subscribe` - Subscribe to push notifications
-
-## 🗄️ Database Schema
-
-### Users Table
-```sql
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  subscription_info JSONB NOT NULL,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-```
-
-### Slogans Table
-```sql
-CREATE TABLE slogans (
-  id SERIAL PRIMARY KEY,
-  text TEXT NOT NULL,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-```
-
-### Dispatch Log Table
-```sql
-CREATE TABLE dispatch_log (
-  id SERIAL PRIMARY KEY,
-  slogan_id INTEGER REFERENCES slogans(id),
-  user_id INTEGER REFERENCES users(id),
-  dispatched_at TIMESTAMP DEFAULT NOW()
-);
-```
 
 ## 🚀 Deployment
 
