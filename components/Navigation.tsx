@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Bell, Home, Sparkles } from 'lucide-react';
+import { Bell, Home, Sparkles, Info, Settings } from 'lucide-react';
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -25,7 +25,7 @@ export default function Navigation() {
           </Link>
 
           {/* Navigation Links */}
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-4 lg:space-x-8">
             <Link
               href="/"
               className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
@@ -48,6 +48,30 @@ export default function Navigation() {
             >
               <Bell className="h-5 w-5" />
               <span className="hidden sm:block">Dashboard</span>
+            </Link>
+
+            <Link
+              href="/about"
+              className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                isActive('/about')
+                  ? 'bg-[#06d6a0]/20 text-[#06d6a0] glow-teal'
+                  : 'text-[#ededed] hover:text-[#06d6a0] hover:bg-[#1a1a1a]'
+              }`}
+            >
+              <Info className="h-5 w-5" />
+              <span className="hidden sm:block">About</span>
+            </Link>
+
+            <Link
+              href="/settings"
+              className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                isActive('/settings')
+                  ? 'bg-[#ffd60a]/20 text-[#ffd60a]'
+                  : 'text-[#ededed] hover:text-[#ffd60a] hover:bg-[#1a1a1a]'
+              }`}
+            >
+              <Settings className="h-5 w-5" />
+              <span className="hidden lg:block">Settings</span>
             </Link>
           </div>
         </div>

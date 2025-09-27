@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Bell, Sparkles, Clock, Heart, Refresh, Star, Zap, Eye, EyeOff } from 'lucide-react';
+import { Bell, Sparkles, Clock, Heart, RefreshCw, Star, Zap, Eye, EyeOff } from 'lucide-react';
 import { mockNotificationHistory, mockSlogans, getRandomSlogan, formatTimeAgo } from '@/lib/mockData';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function Dashboard() {
   const [notifications, setNotifications] = useState(mockNotificationHistory);
@@ -91,12 +92,12 @@ export default function Dashboard() {
               >
                 {isGenerating ? (
                   <>
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                    <LoadingSpinner color="border-white" />
                     <span>Conjuring wisdom...</span>
                   </>
                 ) : (
                   <>
-                    <Refresh className="h-6 w-6" />
+                    <RefreshCw className="h-6 w-6" />
                     <span>Generate New Slogan</span>
                   </>
                 )}
@@ -185,7 +186,7 @@ export default function Dashboard() {
                 <h3 className="text-xl font-bold text-white">Recent Slogans</h3>
               </div>
               <div className="space-y-3">
-                {recentSlogans.map((slogan, index) => (
+                {recentSlogans.map((slogan) => (
                   <div key={slogan.id} className="p-3 bg-[#0a0a0a] rounded-lg border border-[#2a2a2a] hover:border-[#ff2d92]/20 transition-all duration-200 group cursor-pointer">
                     <p className="text-sm text-[#a0a0a0] group-hover:text-white transition-colors duration-200">
                       "{slogan.text}"
